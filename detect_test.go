@@ -22,24 +22,36 @@ var (
 	example6b = []byte(example6s)
 )
 
-func TestIsHTML(t *testing.T) {
-	if !IsHTML(example1b) {
+func TestHasHTMLTag(t *testing.T) {
+	if !HasHTMLTag(example1b) {
 		t.Fail()
 	}
-	if !IsHTML(example2b) {
+	if !HasHTMLTag(example2b) {
 		t.Fail()
 	}
-	if IsHTML(example3b) {
+	if HasHTMLTag(example3b) {
 		t.Fail()
 	}
-	if IsHTML(example4b) {
+	if HasHTMLTag(example4b) {
 		t.Fail()
 	}
-	if IsHTML(example5b) {
+	if HasHTMLTag(example5b) {
 		t.Fail()
 	}
-	if !IsHTML(example6b) {
+	if !HasHTMLTag(example6b) {
 		t.Fail()
+	}
+	if HasHTMLTag([]byte("<asdfhtml><body>hi</body></html>")) {
+		t.Fatal("fail: <asdfhtml><body>hi</body></html> has a html tag?")
+	}
+}
+
+func TestHasScriptTag(t *testing.T) {
+	if !HasScriptTag([]byte("<script>1+1</script>")) {
+		t.Fatal("fail: <script>1+1</script> does not have a script tag?")
+	}
+	if HasScriptTag([]byte("<asdfscript>1+1</script>")) {
+		t.Fatal("fail: <asdfscript>1+1</script> has a script tag?")
 	}
 }
 
@@ -85,23 +97,23 @@ func TestHTMLIndex(t *testing.T) {
 	}
 }
 
-func TestIsHTMLString(t *testing.T) {
-	if !IsHTMLString(example1s) {
+func TestHasHTMLTagString(t *testing.T) {
+	if !HasHTMLTagString(example1s) {
 		t.Fail()
 	}
-	if !IsHTMLString(example2s) {
+	if !HasHTMLTagString(example2s) {
 		t.Fail()
 	}
-	if IsHTMLString(example3s) {
+	if HasHTMLTagString(example3s) {
 		t.Fail()
 	}
-	if IsHTMLString(example4s) {
+	if HasHTMLTagString(example4s) {
 		t.Fail()
 	}
-	if IsHTMLString(example5s) {
+	if HasHTMLTagString(example5s) {
 		t.Fail()
 	}
-	if !IsHTMLString(example6s) {
+	if !HasHTMLTagString(example6s) {
 		t.Fail()
 	}
 }
