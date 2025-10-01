@@ -23,139 +23,139 @@ var (
 )
 
 func TestHasHTMLTag(t *testing.T) {
-	if !HasHTMLTag(example1b) {
+	if !HasHTMLTag(example1b, 200) {
 		t.Fail()
 	}
-	if !HasHTMLTag(example2b) {
+	if !HasHTMLTag(example2b, 200) {
 		t.Fail()
 	}
-	if HasHTMLTag(example3b) {
+	if HasHTMLTag(example3b, 200) {
 		t.Fail()
 	}
-	if HasHTMLTag(example4b) {
+	if HasHTMLTag(example4b, 200) {
 		t.Fail()
 	}
-	if HasHTMLTag(example5b) {
+	if HasHTMLTag(example5b, 200) {
 		t.Fail()
 	}
-	if !HasHTMLTag(example6b) {
+	if !HasHTMLTag(example6b, 200) {
 		t.Fail()
 	}
-	if HasHTMLTag([]byte("<asdfhtml><body>hi</body></html>")) {
+	if HasHTMLTag([]byte("<asdfhtml><body>hi</body></html>"), 200) {
 		t.Fatal("fail: <asdfhtml><body>hi</body></html> has a html tag?")
 	}
 }
 
 func TestHasScriptTag(t *testing.T) {
-	if !HasScriptTag([]byte("<script>1+1</script>")) {
+	if !HasScriptTag([]byte("<script>1+1</script>"), 200) {
 		t.Fatal("fail: <script>1+1</script> does not have a script tag?")
 	}
-	if HasScriptTag([]byte("<asdfscript>1+1</script>")) {
+	if HasScriptTag([]byte("<asdfscript>1+1</script>"), 200) {
 		t.Fatal("fail: <asdfscript>1+1</script> has a script tag?")
 	}
 }
 
 func TestGetHTMLTag(t *testing.T) {
-	if tag, err := GetHTMLTag(example1b); err != nil || string(tag) != "<html>" {
+	if tag, err := GetHTMLTag(example1b, 200); err != nil || string(tag) != "<html>" {
 		t.Fatal(string(tag))
 	}
-	if tag, err := GetHTMLTag(example2b); err != nil || string(tag) != "<html asdf=123 qwerty=256>" {
+	if tag, err := GetHTMLTag(example2b, 200); err != nil || string(tag) != "<html asdf=123 qwerty=256>" {
 		t.Fatal(string(tag))
 	}
-	if _, err := GetHTMLTag(example3b); err == nil {
+	if _, err := GetHTMLTag(example3b, 200); err == nil {
 		t.Fail()
 	}
-	if _, err := GetHTMLTag(example4b); err == nil {
+	if _, err := GetHTMLTag(example4b, 200); err == nil {
 		t.Fail()
 	}
-	if _, err := GetHTMLTag(example5b); err == nil {
+	if _, err := GetHTMLTag(example5b, 200); err == nil {
 		t.Fail()
 	}
-	if tag, err := GetHTMLTag(example6b); err != nil || string(tag) != "<html    asdf=1234>" {
+	if tag, err := GetHTMLTag(example6b, 200); err != nil || string(tag) != "<html    asdf=1234>" {
 		t.Fatal(string(tag))
 	}
 }
 
 func TestHTMLIndex(t *testing.T) {
-	if pos, err := HTMLIndex(example1b); err != nil || pos != 0 {
+	if pos, err := HTMLIndex(example1b, 200); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndex(example2b); err != nil || pos != 0 {
+	if pos, err := HTMLIndex(example2b, 200); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndex(example3b); err == nil {
+	if pos, err := HTMLIndex(example3b, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndex(example4b); err == nil {
+	if pos, err := HTMLIndex(example4b, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndex(example5b); err == nil {
+	if pos, err := HTMLIndex(example5b, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndex(example6b); err != nil || pos != 6 {
+	if pos, err := HTMLIndex(example6b, 200); err != nil || pos != 6 {
 		t.Fatal(pos)
 	}
 }
 
 func TestHasHTMLTagString(t *testing.T) {
-	if !HasHTMLTagString(example1s) {
+	if !HasHTMLTagString(example1s, 200) {
 		t.Fail()
 	}
-	if !HasHTMLTagString(example2s) {
+	if !HasHTMLTagString(example2s, 200) {
 		t.Fail()
 	}
-	if HasHTMLTagString(example3s) {
+	if HasHTMLTagString(example3s, 200) {
 		t.Fail()
 	}
-	if HasHTMLTagString(example4s) {
+	if HasHTMLTagString(example4s, 200) {
 		t.Fail()
 	}
-	if HasHTMLTagString(example5s) {
+	if HasHTMLTagString(example5s, 200) {
 		t.Fail()
 	}
-	if !HasHTMLTagString(example6s) {
+	if !HasHTMLTagString(example6s, 200) {
 		t.Fail()
 	}
 }
 
 func TestGetHTMLTagString(t *testing.T) {
-	if tag, err := GetHTMLTagString(example1s); err != nil || tag != "<html>" {
+	if tag, err := GetHTMLTagString(example1s, 200); err != nil || tag != "<html>" {
 		t.Fatal(tag)
 	}
-	if tag, err := GetHTMLTagString(example2s); err != nil || tag != "<html asdf=123 qwerty=256>" {
+	if tag, err := GetHTMLTagString(example2s, 200); err != nil || tag != "<html asdf=123 qwerty=256>" {
 		t.Fatal(tag)
 	}
-	if _, err := GetHTMLTagString(example3s); err == nil {
+	if _, err := GetHTMLTagString(example3s, 200); err == nil {
 		t.Fail()
 	}
-	if _, err := GetHTMLTagString(example4s); err == nil {
+	if _, err := GetHTMLTagString(example4s, 200); err == nil {
 		t.Fail()
 	}
-	if _, err := GetHTMLTagString(example5s); err == nil {
+	if _, err := GetHTMLTagString(example5s, 200); err == nil {
 		t.Fail()
 	}
-	if tag, err := GetHTMLTagString(example6s); err != nil || tag != "<html    asdf=1234>" {
+	if tag, err := GetHTMLTagString(example6s, 200); err != nil || tag != "<html    asdf=1234>" {
 		t.Fatal(tag)
 	}
 }
 
 func TestHTMLIndexString(t *testing.T) {
-	if pos, err := HTMLIndexString(example1s); err != nil || pos != 0 {
+	if pos, err := HTMLIndexString(example1s, 200); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndexString(example2s); err != nil || pos != 0 {
+	if pos, err := HTMLIndexString(example2s, 200); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndexString(example3s); err == nil {
+	if pos, err := HTMLIndexString(example3s, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndexString(example4s); err == nil {
+	if pos, err := HTMLIndexString(example4s, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndexString(example5s); err == nil {
+	if pos, err := HTMLIndexString(example5s, 200); err == nil {
 		t.Fatal(pos)
 	}
-	if pos, err := HTMLIndexString(example6s); err != nil || pos != 6 {
+	if pos, err := HTMLIndexString(example6s, 200); err != nil || pos != 6 {
 		t.Fatal(pos)
 	}
 }

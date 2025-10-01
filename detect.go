@@ -7,7 +7,11 @@ import (
 
 var errNoHTML = errors.New("could not find a <html> tag")
 
-func HasHTMLTag(data []byte) bool {
+func IsHTML(data []byte) bool {
+	return HasHTMLTag(data, 200)
+}
+
+func HasHTMLTag(data []byte, maxpos uint64) bool {
 	var (
 		foundCounter uint8
 		i            uint64
@@ -42,15 +46,15 @@ func HasHTMLTag(data []byte) bool {
 				foundCounter = 0
 			}
 		}
-		if i > 200 {
-			return false // no <html> tag for the first 200 bytes
+		if maxpos > 0 && i > maxpos {
+			return false // no <html> tag for the first maxpos runes
 		}
 		i++
 	}
 	return false
 }
 
-func HasScriptTag(data []byte) bool {
+func HasScriptTag(data []byte, maxpos uint64) bool {
 	var (
 		foundCounter uint8
 		i            uint64
@@ -93,12 +97,15 @@ func HasScriptTag(data []byte) bool {
 				foundCounter = 0
 			}
 		}
+		if maxpos > 0 && i > maxpos {
+			return false // no <script> tag for the first maxpos runes
+		}
 		i++
 	}
 	return false
 }
 
-func HTMLIndex(data []byte) (uint64, error) {
+func HTMLIndex(data []byte, maxpos uint64) (uint64, error) {
 	var (
 		foundCounter uint8
 		i            uint64
@@ -135,15 +142,15 @@ func HTMLIndex(data []byte) (uint64, error) {
 				foundCounter = 0
 			}
 		}
-		if i > 200 {
-			return 0, errNoHTML // no <html> tag for the first 200 bytes
+		if maxpos > 0 && i > maxpos {
+			return 0, errNoHTML // no <html> tag for the first maxpos runes
 		}
 		i++
 	}
 	return 0, errNoHTML
 }
 
-func HTMLIndexString(s string) (uint64, error) {
+func HTMLIndexString(s string, maxpos uint64) (uint64, error) {
 	var (
 		foundCounter uint8
 		pos          uint64
@@ -180,15 +187,15 @@ func HTMLIndexString(s string) (uint64, error) {
 				foundCounter = 0
 			}
 		}
-		if i > 200 {
-			return 0, errNoHTML // no <html> tag for the first 200 runes
+		if maxpos > 0 && i > maxpos {
+			return 0, errNoHTML // no <html> tag for the first maxpos runes
 		}
 		i++
 	}
 	return 0, errNoHTML
 }
 
-func HasHTMLTagString(s string) bool {
+func HasHTMLTagString(s string, maxpos uint64) bool {
 	var (
 		foundCounter uint8
 		i            uint64
@@ -223,15 +230,15 @@ func HasHTMLTagString(s string) bool {
 				foundCounter = 0
 			}
 		}
-		if i > 200 {
-			return false // no <html> tag for the first 200 runes
+		if maxpos > 0 && i > maxpos {
+			return false // no <html> tag for the first maxpos runes
 		}
 		i++
 	}
 	return false
 }
 
-func HasScriptTagString(s string) bool {
+func HasScriptTagString(s string, maxpos uint64) bool {
 	var (
 		foundCounter uint8
 		i            uint64
@@ -274,13 +281,16 @@ func HasScriptTagString(s string) bool {
 				foundCounter = 0
 			}
 		}
+		if maxpos > 0 && i > maxpos {
+			return false // no <script> tag for the first maxpos runes
+		}
 		i++
 	}
 	return false
 }
 
-func GetHTMLTag(data []byte) ([]byte, error) {
-	pos, err := HTMLIndex(data)
+func GetHTMLTag(data []byte, maxpos uint64) ([]byte, error) {
+	pos, err := HTMLIndex(data, maxpos)
 	if err != nil {
 		return nil, err
 	}
@@ -299,8 +309,8 @@ func GetHTMLTag(data []byte) ([]byte, error) {
 	return collected, nil
 }
 
-func GetHTMLTagString(s string) (string, error) {
-	pos, err := HTMLIndexString(s)
+func GetHTMLTagString(s string, maxpos uint64) (string, error) {
+	pos, err := HTMLIndexString(s, maxpos)
 	if err != nil {
 		return "", err
 	}
