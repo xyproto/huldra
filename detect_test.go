@@ -32,10 +32,10 @@ func TestIsHTML(t *testing.T) {
 	if IsHTML(example3b) {
 		t.Fail()
 	}
-	if !IsHTML(example4b) {
+	if IsHTML(example4b) {
 		t.Fail()
 	}
-	if !IsHTML(example5b) {
+	if IsHTML(example5b) {
 		t.Fail()
 	}
 	if !IsHTML(example6b) {
@@ -53,14 +53,35 @@ func TestGetHTMLTag(t *testing.T) {
 	if _, err := GetHTMLTag(example3b); err == nil {
 		t.Fail()
 	}
-	if tag, err := GetHTMLTag(example4b); err != nil || string(tag) != "<html" {
-		t.Fatal(string(tag))
+	if _, err := GetHTMLTag(example4b); err == nil {
+		t.Fail()
 	}
-	if tag, err := GetHTMLTag(example5b); err != nil || string(tag) != "<html" {
-		t.Fatal(string(tag))
+	if _, err := GetHTMLTag(example5b); err == nil {
+		t.Fail()
 	}
 	if tag, err := GetHTMLTag(example6b); err != nil || string(tag) != "<html    asdf=1234>" {
 		t.Fatal(string(tag))
+	}
+}
+
+func TestHTMLIndex(t *testing.T) {
+	if pos := HTMLIndex(example1b); pos != 0 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndex(example2b); pos != 0 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndex(example3b); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndex(example4b); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndex(example5b); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndex(example6b); pos != 6 {
+		t.Fatal(pos)
 	}
 }
 
@@ -74,10 +95,10 @@ func TestIsHTMLString(t *testing.T) {
 	if IsHTMLString(example3s) {
 		t.Fail()
 	}
-	if !IsHTMLString(example4s) {
+	if IsHTMLString(example4s) {
 		t.Fail()
 	}
-	if !IsHTMLString(example5s) {
+	if IsHTMLString(example5s) {
 		t.Fail()
 	}
 	if !IsHTMLString(example6s) {
@@ -95,13 +116,34 @@ func TestGetHTMLTagString(t *testing.T) {
 	if _, err := GetHTMLTagString(example3s); err == nil {
 		t.Fail()
 	}
-	if tag, err := GetHTMLTagString(example4s); err != nil || tag != "<html" {
-		t.Fatal(tag)
+	if _, err := GetHTMLTagString(example4s); err == nil {
+		t.Fail()
 	}
-	if tag, err := GetHTMLTagString(example5s); err != nil || tag != "<html" {
-		t.Fatal(tag)
+	if _, err := GetHTMLTagString(example5s); err == nil {
+		t.Fail()
 	}
 	if tag, err := GetHTMLTagString(example6s); err != nil || tag != "<html    asdf=1234>" {
 		t.Fatal(tag)
+	}
+}
+
+func TestHTMLIndexString(t *testing.T) {
+	if pos := HTMLIndexString(example1s); pos != 0 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndexString(example2s); pos != 0 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndexString(example3s); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndexString(example4s); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndexString(example5s); pos != -1 {
+		t.Fatal(pos)
+	}
+	if pos := HTMLIndexString(example6s); pos != 6 {
+		t.Fatal(pos)
 	}
 }
