@@ -21,18 +21,26 @@ func HasHTMLTag(data []byte, maxpos uint64) bool {
 		case 1:
 			if r == 'h' || r == 'H' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'm' || r == 'M' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'l' || r == 'L' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 5:
 			if r == '>' || r == ' ' {
@@ -64,26 +72,39 @@ func HasScriptTag(data []byte, maxpos uint64) bool {
 		case 1:
 			if r == 's' || r == 'S' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 'c' || r == 'C' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'r' || r == 'R' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'i' || r == 'I' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
+
 		case 5:
 			if r == 'p' || r == 'P' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 6:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 7:
 			if r == '>' || r == ' ' {
@@ -116,18 +137,26 @@ func HTMLIndex(data []byte, maxpos uint64) (uint64, error) {
 		case 1:
 			if r == 'h' || r == 'H' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'm' || r == 'M' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'l' || r == 'L' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 5:
 			if r == '>' || r == ' ' {
@@ -161,18 +190,26 @@ func HTMLIndexString(s string, maxpos uint64) (uint64, error) {
 		case 1:
 			if r == 'h' || r == 'H' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'm' || r == 'M' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'l' || r == 'L' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 5:
 			if r == '>' || r == ' ' {
@@ -205,23 +242,33 @@ func HasHTMLTagString(s string, maxpos uint64) bool {
 		case 1:
 			if r == 'h' || r == 'H' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'm' || r == 'M' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'l' || r == 'L' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 5:
 			if r == '>' || r == ' ' {
 				// found "<html " or "<html>"
 				return true
+			} else {
+				foundCounter = 0
 			}
 		default:
 			if r == '<' {
@@ -248,26 +295,38 @@ func HasScriptTagString(s string, maxpos uint64) bool {
 		case 1:
 			if r == 's' || r == 'S' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 2:
 			if r == 'c' || r == 'C' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 3:
 			if r == 'r' || r == 'R' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 4:
 			if r == 'i' || r == 'I' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 5:
 			if r == 'p' || r == 'P' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 6:
 			if r == 't' || r == 'T' {
 				foundCounter++
+			} else {
+				foundCounter = 0
 			}
 		case 7:
 			if r == '>' || r == ' ' {
