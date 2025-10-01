@@ -65,22 +65,22 @@ func TestGetHTMLTag(t *testing.T) {
 }
 
 func TestHTMLIndex(t *testing.T) {
-	if pos := HTMLIndex(example1b); pos != 0 {
+	if pos, err := HTMLIndex(example1b); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndex(example2b); pos != 0 {
+	if pos, err := HTMLIndex(example2b); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndex(example3b); pos != -1 {
+	if pos, err := HTMLIndex(example3b); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndex(example4b); pos != -1 {
+	if pos, err := HTMLIndex(example4b); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndex(example5b); pos != -1 {
+	if pos, err := HTMLIndex(example5b); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndex(example6b); pos != 6 {
+	if pos, err := HTMLIndex(example6b); err != nil || pos != 6 {
 		t.Fatal(pos)
 	}
 }
@@ -128,22 +128,22 @@ func TestGetHTMLTagString(t *testing.T) {
 }
 
 func TestHTMLIndexString(t *testing.T) {
-	if pos := HTMLIndexString(example1s); pos != 0 {
+	if pos, err := HTMLIndexString(example1s); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndexString(example2s); pos != 0 {
+	if pos, err := HTMLIndexString(example2s); err != nil || pos != 0 {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndexString(example3s); pos != -1 {
+	if pos, err := HTMLIndexString(example3s); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndexString(example4s); pos != -1 {
+	if pos, err := HTMLIndexString(example4s); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndexString(example5s); pos != -1 {
+	if pos, err := HTMLIndexString(example5s); err == nil {
 		t.Fatal(pos)
 	}
-	if pos := HTMLIndexString(example6s); pos != 6 {
+	if pos, err := HTMLIndexString(example6s); err != nil || pos != 6 {
 		t.Fatal(pos)
 	}
 }

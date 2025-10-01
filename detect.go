@@ -8,156 +8,177 @@ import (
 var errNoHTML = errors.New("could not find a <html> tag")
 
 func IsHTML(data []byte) bool {
-	var foundCounter uint8
-	for i, r := range data {
-		switch r {
-		case '<':
-			foundCounter = 1
-		case 'h', 'H':
-			if foundCounter == 1 {
+	var (
+		foundCounter uint8
+		i            uint64
+	)
+	for _, r := range data {
+		switch foundCounter {
+		case 1:
+			if r == 'h' || r == 'H' {
 				foundCounter++
 			}
-		case 't', 'T':
-			if foundCounter == 2 {
+		case 2:
+			if r == 't' || r == 'T' {
 				foundCounter++
 			}
-		case 'm', 'M':
-			if foundCounter == 3 {
+		case 3:
+			if r == 'm' || r == 'M' {
 				foundCounter++
 			}
-		case 'l', 'L':
-			if foundCounter == 4 {
+		case 4:
+			if r == 'l' || r == 'L' {
 				foundCounter++
 			}
-		case ' ', '>':
-			if foundCounter == 5 {
-				return true // found "<html " or "<html>"
+		case 5:
+			if r == '>' || r == ' ' {
+				// found "<html " or "<html>
+				return true
+			}
+		default:
+			if r == '<' {
+				foundCounter = 1
 			}
 		}
 		if i > 200 {
 			return false // no <html> tag for the first 200 bytes
 		}
+		i++
 	}
 	return false
 }
 
-func HTMLIndex(data []byte) int {
+func HTMLIndex(data []byte) (uint64, error) {
 	var (
 		foundCounter uint8
-		pos          int
+		i            uint64
+		pos          uint64
 	)
-	for i, r := range data {
-		switch r {
-		case '<':
-			pos = i
-			foundCounter = 1
-		case 'h', 'H':
-			if foundCounter == 1 {
+	for _, r := range data {
+		switch foundCounter {
+		case 1:
+			if r == 'h' || r == 'H' {
 				foundCounter++
 			}
-		case 't', 'T':
-			if foundCounter == 2 {
+		case 2:
+			if r == 't' || r == 'T' {
 				foundCounter++
 			}
-		case 'm', 'M':
-			if foundCounter == 3 {
+		case 3:
+			if r == 'm' || r == 'M' {
 				foundCounter++
 			}
-		case 'l', 'L':
-			if foundCounter == 4 {
+		case 4:
+			if r == 'l' || r == 'L' {
 				foundCounter++
 			}
-		case ' ', '>':
-			if foundCounter == 5 {
-				// found "<html " or "<html>"
-				return pos
+		case 5:
+			if r == '>' || r == ' ' {
+				// found "<html " or "<html>
+				return pos, nil
+			}
+		default:
+			if r == '<' {
+				pos = i
+				foundCounter = 1
 			}
 		}
-		if pos > 200 {
-			return -1 // no <html> tag for the first 200 bytes
+		if i > 200 {
+			return 0, errNoHTML // no <html> tag for the first 200 bytes
 		}
+		i++
 	}
-	return -1
+	return 0, errNoHTML
+}
+
+func HTMLIndexString(s string) (uint64, error) {
+	var (
+		foundCounter uint8
+		pos          uint64
+		i            uint64
+	)
+	for _, r := range s {
+		switch foundCounter {
+		case 1:
+			if r == 'h' || r == 'H' {
+				foundCounter++
+			}
+		case 2:
+			if r == 't' || r == 'T' {
+				foundCounter++
+			}
+		case 3:
+			if r == 'm' || r == 'M' {
+				foundCounter++
+			}
+		case 4:
+			if r == 'l' || r == 'L' {
+				foundCounter++
+			}
+		case 5:
+			if r == '>' || r == ' ' {
+				// found "<html " or "<html>
+				return pos, nil
+			}
+		default:
+			if r == '<' {
+				pos = i
+				foundCounter = 1
+			}
+		}
+		if i > 200 {
+			return 0, errNoHTML // no <html> tag for the first 200 runes
+		}
+		i++
+	}
+	return 0, errNoHTML
 }
 
 func IsHTMLString(s string) bool {
-	var foundCounter uint8
-	for i, r := range s {
-		switch r {
-		case '<':
-			foundCounter = 1
-		case 'h', 'H':
-			if foundCounter == 1 {
+	var (
+		foundCounter uint8
+		i            uint64
+	)
+	for _, r := range s {
+		switch foundCounter {
+		case 1:
+			if r == 'h' || r == 'H' {
 				foundCounter++
 			}
-		case 't', 'T':
-			if foundCounter == 2 {
+		case 2:
+			if r == 't' || r == 'T' {
 				foundCounter++
 			}
-		case 'm', 'M':
-			if foundCounter == 3 {
+		case 3:
+			if r == 'm' || r == 'M' {
 				foundCounter++
 			}
-		case 'l', 'L':
-			if foundCounter == 4 {
+		case 4:
+			if r == 'l' || r == 'L' {
 				foundCounter++
 			}
-		case ' ', '>':
-			if foundCounter == 5 {
-				// found "<html " or "<html>"
+		case 5:
+			if r == '>' || r == ' ' {
+				// found "<html " or "<html>
 				return true
+			}
+		default:
+			if r == '<' {
+				foundCounter = 1
 			}
 		}
 		if i > 200 {
 			return false // no <html> tag for the first 200 runes
 		}
+		i++
 	}
 	return false
 }
 
-func HTMLIndexString(s string) int {
-	var (
-		foundCounter uint8
-		pos          int
-	)
-	for i, r := range s {
-		switch r {
-		case '<':
-			pos = i
-			foundCounter = 1
-		case 'h', 'H':
-			if foundCounter == 1 {
-				foundCounter++
-			}
-		case 't', 'T':
-			if foundCounter == 2 {
-				foundCounter++
-			}
-		case 'm', 'M':
-			if foundCounter == 3 {
-				foundCounter++
-			}
-		case 'l', 'L':
-			if foundCounter == 4 {
-				foundCounter++
-			}
-		case ' ', '>':
-			if foundCounter == 5 {
-				// found "<html " or "<html>"
-				return pos
-			}
-		}
-		if pos > 200 {
-			return -1 // no <html> tag for the first 200 runes
-		}
-	}
-	return -1
-}
-
 func GetHTMLTag(data []byte) ([]byte, error) {
-	pos := HTMLIndex(data)
-	if pos == -1 {
-		return nil, errNoHTML
+	pos, err := HTMLIndex(data)
+	if err != nil {
+		return nil, err
 	}
 	var collected []byte
 	collected = append(collected, '<')
@@ -175,9 +196,9 @@ func GetHTMLTag(data []byte) ([]byte, error) {
 }
 
 func GetHTMLTagString(s string) (string, error) {
-	pos := HTMLIndexString(s)
-	if pos == -1 {
-		return "", errNoHTML
+	pos, err := HTMLIndexString(s)
+	if err != nil {
+		return "", err
 	}
 	var sb strings.Builder
 	sb.WriteRune('<')
